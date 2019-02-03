@@ -11,8 +11,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'locations_objets_restrictions_titre' => 'Locations d\'objets - restrictions',
 
 	// C
-	'cfg_exemple' => 'Exemple',
-	'cfg_exemple_explication' => 'Explication de cet exemple',
+	'champ_chambres_objets' => 'Activer l’ajout de restrictions sur les contenus :',
 	'cfg_titre_parametrages' => 'Paramétrages',
 
 	// T
