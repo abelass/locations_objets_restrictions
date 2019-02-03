@@ -1,6 +1,6 @@
 <?php
 if (!defined("_ECRIRE_INC_VERSION"))
-  return;
+	return;
 
 /**
  * Retourne les déclarations des champs inséré via la pipeline "prix_objets_extensions"
@@ -10,10 +10,10 @@ if (!defined("_ECRIRE_INC_VERSION"))
  */
 function locations_objets_restrictions_extensions_declaration($valeurs = array()) {
 
-  return pipeline(
-      'locations_objets_restrictions_extensions', array(
-        'data' => array(),
-        'args' => $valeurs,
-      )
-    );
+	return pipeline(
+			'locations_objets_restrictions_extensions', array(
+				'data' => array(),
+				'args' => $valeurs,
+			)
+		);
 }
