@@ -42,9 +42,11 @@
 
 	<necessite nom="saisies" compatibilite="[2.28.0;]" /> 
 
+  <!-- Déclaration des pipelines -->
+  <pipeline nom="locations_objets_restrictions_extensions" action='' />
 
+  <!-- Appels des pipelines -->
 	<pipeline nom="autoriser" inclure="locations_objets_restrictions_autorisations.php" /> 
-
 	<pipeline nom="declarer_tables_objets_sql" inclure="base/locations_objets_restrictions.php" /> 
 	<pipeline nom="declarer_tables_interfaces" inclure="base/locations_objets_restrictions.php" /> 
 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/locations_objets_restrictions.php" /> 
