@@ -27,6 +27,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_restrictions' => '@nb@ restrictions',
 	'info_restrictions_auteur' => 'Les restrictions de cet auteur',
 
+	// L
+	'label_parametres_specifiques' => 'Parametres spécifiques',
+
 	// R
 	'retirer_lien_restriction' => 'Retirer cette restriction',
 	'retirer_tous_liens_restrictions' => 'Retirer toutes les restrictions',

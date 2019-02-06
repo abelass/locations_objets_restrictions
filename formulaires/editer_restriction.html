@@ -14,11 +14,26 @@
 			[(#SAISIE{textarea, descriptif,
 				label=<:restriction:champ_descriptif_label:>})]
 
-			[(#SAISIE{selection, extension, obligatoire=oui,
-				label=<:restriction:champ_extension_label:>})]
+			[(#SAISIE{selection, type_restriction, obligatoire=oui,
+				label=<:restriction:champ_extension_label:>,
+				data=#ENV{_types_restriction}})]
 
-			[(#SAISIE{selection, id_extension, obligatoire=oui,
-				label=<:restriction:champ_id_extension_label:>})]
+			<script type="text/javascript">
+				$(function() {
+					$("#champ_type_restriction").change(function() {
+						var type_restriction = $(this).val();
+						ajaxReload('restrictions_champs_specifiques', {
+							args : {
+								type_restriction : type_restriction,
+							}
+						});
+					});
+				});
+			</script>
+
+
+			<INCLURE{fond=formulaires/inc-editer_restrictions-champs_specifiques,env,ajax=restrictions_champs_specifiques} />
+
 
 		</div>
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]

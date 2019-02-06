@@ -50,8 +50,8 @@ function locations_objets_restrictions_declarer_tables_objets_sql($tables) {
 			'id_restriction_source' => 'bigint(21) NOT NULL DEFAULT 0',
 			'titre'              => 'varchar(255) NOT NULL DEFAULT ""',
 			'descriptif'         => 'text NOT NULL DEFAULT ""',
-			'extension'          => 'varchar(50) NOT NULL DEFAULT ""',
-			'id_extension'       => 'bigint(21) NOT NULL DEFAULT 0',
+			"type_restriction" => "varchar(20) NOT NULL DEFAULT ''",
+			"valeurs_restriction" => "text NOT NULL DEFAULT ''",
 			'date'               => 'datetime NOT NULL DEFAULT "0000-00-00 00:00:00"',
 			'maj'                => 'TIMESTAMP'
 		),
@@ -60,8 +60,8 @@ function locations_objets_restrictions_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => 'titre AS titre, "" AS lang',
 		'date' => 'date',
-		'champs_editables'  => array('id_restriction_source', 'titre', 'descriptif', 'extension', 'id_extension'),
-		'champs_versionnes' => array('id_restriction_source', 'titre', 'descriptif', 'extension', 'id_extension'),
+		'champs_editables'  => array('id_restriction_source', 'titre', 'descriptif', 'type_restriction', 'valeurs_restriction'),
+		'champs_versionnes' => array('id_restriction_source', 'titre', 'descriptif', 'type_restriction', 'valeurs_restriction'),
 		'rechercher_champs' => array("titre" => 10, "descriptif" => 8),
 		'tables_jointures'  => array('spip_restrictions_liens'),
 

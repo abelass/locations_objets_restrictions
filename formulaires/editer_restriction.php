@@ -68,45 +68,18 @@ function formulaires_editer_restriction_identifier_dist($id_restriction = 'new',
  *     Environnement du formulaire
  */
 function formulaires_editer_restriction_charger_dist($id_restriction = 'new', $retour = '', $associer_objet = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
-	include_spip('inc/prix_objets');
+	include_spip('inc/locations_objets_restrictions');
 	$valeurs = formulaires_editer_objet_charger('restriction', $id_restriction, '', $lier_trad, $retour, $config_fonc, $row, $hidden);
-    // Inclure les extensions.
-    $valeurs['_saisies_extras'] = prix_objets_extensions_declaration($valeurs);
-    $extensions = array_keys($valeurs['_saisies_extras']);
-    $saisies = array();
 
-    foreach ($valeurs['_saisies_extras'] as $s) {
-      $saisies = array_merge($saisies, $s);
-      foreach (saisies_lister_par_nom($s) as $nom => $definition) {
-        $valeurs[$nom] = _request($nom);
-      }
-    }
+	$restrictions = chercher_definitions_restrictions();
+	$valeurs['_types_restriction'] = [];
 
-    // Déclarer les extensions
-    if (is_array($extensions) and count($extensions) > 0) {
+	foreach ($restrictions as $type => $restriction) {
+		$valeurs['_types_restriction'][$type] = $restriction['nom'];
+	}
 
-      $valeurs['extensions'] = _request('extensions');
 
-      $valeurs['_saisies_extras'] = array_merge(
-        array(
-          array(
-            'saisie' => 'hidden',
-            'options' => array(
-              'nom' => 'extensions',
-              'defaut' => implode(',', $extensions),
-            )
-          ),
-          array(
-            'saisie' => 'fieldset',
-            'options' => array(
-              'nom' => 'extensions',
-              'label' => _T('prix_objets:info_extensions'),
-            ),
-            'saisies' =>  $saisies,
-          )
-        )
-        );
-    }	
+
 	return $valeurs;
 }
 
