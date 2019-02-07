@@ -78,6 +78,10 @@ function formulaires_editer_restriction_charger_dist($id_restriction = 'new', $r
 		$valeurs['_types_restriction'][$type] = $restriction['nom'];
 	}
 
+	if (count($valeurs['_types_restriction']) <= 1) {
+		$valeurs['type_restriction'] = $type;
+	}
+
 	$valeurs['_valeurs_promotion'] = json_decode($valeurs['valeurs_promotion']);
 
 	return $valeurs;

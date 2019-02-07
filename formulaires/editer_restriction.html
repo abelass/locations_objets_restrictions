@@ -13,8 +13,13 @@
 
 			[(#SAISIE{textarea, descriptif,
 				label=<:restriction:champ_descriptif_label:>})]
+			#SET{type_saisie,selection}
+			[(#ENV{_types_restriction}|count|<={1}|oui)
+				#SET{type_saisie,hidden}
+			]
 
-			[(#SAISIE{selection, type_restriction, obligatoire=oui,
+
+			[(#SAISIE{#GET{type_saisie}, type_restriction, obligatoire=oui,
 				label=<:restriction:champ_extension_label:>,
 				data=#ENV{_types_restriction}})]
 
