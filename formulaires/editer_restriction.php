@@ -69,6 +69,7 @@ function formulaires_editer_restriction_identifier_dist($id_restriction = 'new',
  */
 function formulaires_editer_restriction_charger_dist($id_restriction = 'new', $retour = '', $associer_objet = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
 	include_spip('inc/locations_objets_restrictions');
+	include_spip('inc/saisies');
 	$valeurs = formulaires_editer_objet_charger('restriction', $id_restriction, '', $lier_trad, $retour, $config_fonc, $row, $hidden);
 
 	$restrictions = chercher_definitions_restrictions();
@@ -78,11 +79,28 @@ function formulaires_editer_restriction_charger_dist($id_restriction = 'new', $r
 		$valeurs['_types_restriction'][$type] = $restriction['nom'];
 	}
 
+	$type_restriction = _request('type_restriction') ?
+		_request('type_restriction') :
+		$valeurs['type_restriction'];
+
+
 	if (count($valeurs['_types_restriction']) <= 1) {
-		$valeurs['type_restriction'] = $type;
+		$type_restriction = $valeurs['type_restriction'] = $type;
+	}
+	else {
+		$valeurs['type_restriction'] = $type_restriction;
 	}
 
-	$valeurs['_valeurs_promotion'] = json_decode($valeurs['valeurs_promotion']);
+	$valeurs['_valeurs_restriction'] = json_decode($valeurs['valeurs_restriction'], TRUE);
+
+	if ($type_restriction) {
+		foreach ($restrictions[$type_restriction]['saisies'] AS $saisie) {
+			$nom = $saisie['options']['nom'];
+			$valeurs[$nom] = _request($nom) ?
+				_request($nom) :
+				$valeurs['_valeurs_restriction'][$nom];
+		}
+	}
 
 	return $valeurs;
 }
@@ -113,9 +131,11 @@ function formulaires_editer_restriction_charger_dist($id_restriction = 'new', $r
  *     Tableau des erreurs
  */
 function formulaires_editer_restriction_verifier_dist($id_restriction = 'new', $retour = '', $associer_objet = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
+	include_spip('public/assembler');
+	include_spip('inc/saisies');
 	$erreurs = array();
 
-	$erreurs = formulaires_editer_objet_verifier('restriction', $id_restriction, array('titre', 'extension', 'id_extension'));
+	$erreurs = formulaires_editer_objet_verifier('restriction', $id_restriction, array('titre'));
 
 // Préparer les données multis pour l'enregistrement.
 	if (!$erreurs) {
