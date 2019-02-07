@@ -78,7 +78,7 @@ function formulaires_editer_restriction_charger_dist($id_restriction = 'new', $r
 		$valeurs['_types_restriction'][$type] = $restriction['nom'];
 	}
 
-
+	$valeurs['_valeurs_promotion'] = json_decode($valeurs['valeurs_promotion']);
 
 	return $valeurs;
 }
@@ -112,6 +112,30 @@ function formulaires_editer_restriction_verifier_dist($id_restriction = 'new', $
 	$erreurs = array();
 
 	$erreurs = formulaires_editer_objet_verifier('restriction', $id_restriction, array('titre', 'extension', 'id_extension'));
+
+// Préparer les données multis pour l'enregistrement.
+	if (!$erreurs) {
+		$function = charger_fonction(_request('type_restriction'), "restrictions", true);
+		$saisies = $function(calculer_contexte());
+		$valeurs_restriction = saisies_lister_par_nom(
+			array(
+				array(
+					'saisie' => 'fieldset',
+					'options' => array(
+						'nom' => 'specifique',
+					),
+					'saisies' => $saisies['saisies']
+				)
+			));
+
+		$restriction = array();
+		foreach ($valeurs_restriction as $champ) {
+			if ($request = _request($champ['options']['nom'])) {
+				$restriction[$champ['options']['nom']] = $request;
+			}
+		}
+		set_request('valeurs_restriction', json_encode($restriction));
+	}
 
 	return $erreurs;
 }
@@ -150,9 +174,9 @@ function formulaires_editer_restriction_traiter_dist($id_restriction = 'new', $r
 
 		if ($objet and $id_objet and autoriser('modifier', $objet, $id_objet)) {
 			include_spip('action/editer_liens');
-			
+
 			objet_associer(array('restriction' => $id_restriction), array($objet => $id_objet));
-			
+
 			if (isset($retours['redirect'])) {
 				$retours['redirect'] = parametre_url($retours['redirect'], 'id_lien_ajoute', $id_restriction, '&');
 			}
