@@ -47,7 +47,6 @@ function locations_objets_restrictions_declarer_tables_objets_sql($tables) {
 		'principale' => 'oui',
 		'field'=> array(
 			'id_restriction'     => 'bigint(21) NOT NULL',
-			'id_restriction_source' => 'bigint(21) NOT NULL DEFAULT 0',
 			'titre'              => 'varchar(255) NOT NULL DEFAULT ""',
 			'descriptif'         => 'text NOT NULL DEFAULT ""',
 			"type_restriction" => "varchar(20) NOT NULL DEFAULT ''",
@@ -64,8 +63,6 @@ function locations_objets_restrictions_declarer_tables_objets_sql($tables) {
 		'champs_versionnes' => array('id_restriction_source', 'titre', 'descriptif', 'type_restriction', 'valeurs_restriction'),
 		'rechercher_champs' => array("titre" => 10, "descriptif" => 8),
 		'tables_jointures'  => array('spip_restrictions_liens'),
-
-
 	);
 
 	return $tables;
