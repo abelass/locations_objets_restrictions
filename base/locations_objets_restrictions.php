@@ -42,10 +42,10 @@ function locations_objets_restrictions_declarer_tables_interfaces($interfaces) {
  */
 function locations_objets_restrictions_declarer_tables_objets_sql($tables) {
 
-	$tables['spip_restrictions'] = array(
+	$tables['spip_restrictions'] = [
 		'type' => 'restriction',
 		'principale' => 'oui',
-		'field'=> array(
+		'field'=> [
 			'id_restriction'     => 'bigint(21) NOT NULL',
 			'titre'              => 'varchar(255) NOT NULL DEFAULT ""',
 			'descriptif'         => 'text NOT NULL DEFAULT ""',
@@ -53,17 +53,17 @@ function locations_objets_restrictions_declarer_tables_objets_sql($tables) {
 			"valeurs_restriction" => "text NOT NULL DEFAULT ''",
 			'date'               => 'datetime NOT NULL DEFAULT "0000-00-00 00:00:00"',
 			'maj'                => 'TIMESTAMP'
-		),
-		'key' => array(
+		],
+		'key' => [
 			'PRIMARY KEY'        => 'id_restriction',
-		),
+		],
 		'titre' => 'titre AS titre, "" AS lang',
 		'date' => 'date',
-		'champs_editables'  => array('id_restriction_source', 'titre', 'descriptif', 'type_restriction', 'valeurs_restriction'),
-		'champs_versionnes' => array('id_restriction_source', 'titre', 'descriptif', 'type_restriction', 'valeurs_restriction'),
-		'rechercher_champs' => array("titre" => 10, "descriptif" => 8),
-		'tables_jointures'  => array('spip_restrictions_liens'),
-	);
+		'champs_editables'  => ['id_restriction_source', 'titre', 'descriptif', 'type_restriction', 'valeurs_restriction'],
+		'champs_versionnes' => ['id_restriction_source', 'titre', 'descriptif', 'type_restriction', 'valeurs_restriction'],
+		'rechercher_champs' => ["titre" => 10, "descriptif" => 8],
+		'tables_jointures'  => ['spip_restrictions_liens'],
+	];
 
 	return $tables;
 }
@@ -80,18 +80,18 @@ function locations_objets_restrictions_declarer_tables_objets_sql($tables) {
  */
 function locations_objets_restrictions_declarer_tables_auxiliaires($tables) {
 
-	$tables['spip_restrictions_liens'] = array(
-		'field' => array(
+	$tables['spip_restrictions_liens'] = [
+		'field' => [
 			'id_restriction'     => 'bigint(21) DEFAULT "0" NOT NULL',
 			'id_objet'           => 'bigint(21) DEFAULT "0" NOT NULL',
 			'objet'              => 'VARCHAR(25) DEFAULT "" NOT NULL',
 			'vu'                 => 'VARCHAR(6) DEFAULT "non" NOT NULL',
-		),
-		'key' => array(
+		],
+		'key' => [
 			'PRIMARY KEY'        => 'id_restriction,id_objet,objet',
 			'KEY id_restriction' => 'id_restriction',
-		)
-	);
+		]
+	];
 
 	return $tables;
 }
