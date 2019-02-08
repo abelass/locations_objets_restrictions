@@ -17,6 +17,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'champ_id_extension_label' => 'ID extension',
 	'champ_id_restriction_source_label' => 'ID restriction source',
 	'champ_titre_label' => 'Titre',
+	'champ_type_restriction_label' => 'Type de restriction :',
 	'confirmer_supprimer_restriction' => 'Confirmez-vous la suppression de cette restriction ?',
 
 	// I
