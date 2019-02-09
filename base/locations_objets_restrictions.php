@@ -86,10 +86,12 @@ function locations_objets_restrictions_declarer_tables_auxiliaires($tables) {
 			'id_objet'           => 'bigint(21) DEFAULT "0" NOT NULL',
 			'objet'              => 'VARCHAR(25) DEFAULT "" NOT NULL',
 			'vu'                 => 'VARCHAR(6) DEFAULT "non" NOT NULL',
+			"rang_lien"          => "int(4) NOT NULL DEFAULT '0'",
 		],
 		'key' => [
 			'PRIMARY KEY'        => 'id_restriction,id_objet,objet',
 			'KEY id_restriction' => 'id_restriction',
+			'KEY rang_lien'      => 'rang_lien',
 		]
 	];
 

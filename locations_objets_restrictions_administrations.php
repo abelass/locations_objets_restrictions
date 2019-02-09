@@ -32,6 +32,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 **/
 function locations_objets_restrictions_upgrade($nom_meta_base_version, $version_cible) {
 	$maj = array();
+
 	# quelques exemples
 	# (que vous pouvez supprimer !)
 	# 
@@ -52,6 +53,7 @@ function locations_objets_restrictions_upgrade($nom_meta_base_version, $version_
 	# ...
 
 	$maj['create'] = array(array('maj_tables', array('spip_restrictions', 'spip_restrictions_liens')));
+	$maj['1.0.1'] = array(array('maj_tables', array('spip_restrictions_liens')));
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
