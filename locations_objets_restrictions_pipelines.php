@@ -54,13 +54,65 @@ function locations_objets_restrictions_affiche_milieu($flux) {
  * Supprime les liens orphelins de l'objet vers quelqu'un et de quelqu'un vers l'objet.
  *
  * @pipeline optimiser_base_disparus
- * @param  array $flux Données du pipeline
- * @return array       Données du pipeline
+ * @param  array $flux 
+ *   Données du pipeline
+ * @return array
+ *   Données du pipeline
  */
 function locations_objets_restrictions_optimiser_base_disparus($flux) {
 
 	include_spip('action/editer_liens');
 	$flux['data'] += objet_optimiser_liens(array('restriction'=>'*'), '*');
+
+	return $flux;
+}
+
+/**
+ * Compléter le tableau d’erreurs renvoyé par la fonction verifier d'un formulaire CVT.
+ * 
+ * @pipeline formulaire_verifier
+ * @param array $flux
+ *  Données du pipeline
+ * @return array 
+ *   Données du pipeline
+ */
+function locations_objets_restrictions_formulaire_verifier($flux){
+	if ($flux['args']['form'] == 'editer_objets_location'){
+		include_spip('inc/locations_objets_restrictions');
+		$definitions_saisies = chercher_definitions_restrictions();
+		$verifier = charger_fonction('verifier', 'inc');
+		$objet = _request('location_objet');
+		$id_objet = _request('id_location_objet');
+
+		// On détermine les restrictions attachées à l'objet de location.
+		$sql = sql_select(
+			'type_restriction,valeurs_restriction',
+			'spip_restrictions_liens,spip_restrictions ', 'objet Like' . sql_quote($objet) . ' AND id_objet=' . $id_objet,
+			 '', 
+			 'rang_lien ASC');
+
+		// Pour chaque restriction on vérifie si les valeurs des champs à tester contiennent des erreurs.
+		while ($row sql_fetch($sql)) {
+			$type_restriction = $row['type_restriction'];
+			$definitions_saisie = $definitions_saisies[$type_restriction];
+			if (isset($definitions_saisie['verifier']) AND isset($definitions_saisie['verifier']['champs'])) {
+				foreach ($definitions_saisie['verifier']['champs'] = $champ) {
+					// S'il n'existe pas déjà d'erreur pour le champ en question, on verifie via la vérification correspondante
+					// au type de restriction.
+					if (!isset($flux['data'][$champ]) AND 
+						$erreur = $verifier(
+							$champ, 
+							$type_restriction, 
+							array(
+								'valeurs_restriction'=> json_decode($row['valeurs_restriction'], TRUE)))) {
+						$flux['data'][$champ] = $erreur;
+					}
+				}
+			}
+
+		}
+		
+	}
 
 	return $flux;
 }
