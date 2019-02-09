@@ -29,6 +29,5 @@
 	<pipeline nom="optimiser_base_disparus" inclure="locations_objets_restrictions_pipelines.php" />
 	<pipeline nom="formulaire_verifier" inclure="locations_objets_restrictions_pipelines.php" />
 
-
 	<menu nom="restrictions" titre="restriction:titre_restrictions" parent="menu_edition" icone="images/restriction-16.png" action="restrictions" />
 </paquet>
