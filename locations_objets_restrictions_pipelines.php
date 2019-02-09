@@ -27,15 +27,15 @@ function locations_objets_restrictions_affiche_milieu($flux) {
 	include_spip('inc/config');
 	$texte = '';
 	$e = trouver_objet_exec($flux['args']['exec']);
-	$objets_cibles = lire_config('locations_objets_restrictions/objets', array());
+	$objets_cibles = lire_config('locations_objets_restrictions/objets', []);
 
 	// Objets_informations sur les objets choisis.
 	if (!$e['edition'] and in_array($e['table_objet_sql'], $objets_cibles)) {
-		$texte .= recuperer_fond('prive/objets/editer/liens', array(
+		$texte .= recuperer_fond('prive/objets/editer/liens', [
 			'table_source' => 'restrictions',
 			'objet' => $e['type'],
 			'id_objet' => $flux['args'][$e['id_table_objet']]
-		));
+		]);
 	}
 
 	if ($texte) {
@@ -64,7 +64,7 @@ function locations_objets_restrictions_affiche_milieu($flux) {
 function locations_objets_restrictions_optimiser_base_disparus($flux) {
 
 	include_spip('action/editer_liens');
-	$flux['data'] += objet_optimiser_liens(array('restriction'=>'*'), '*');
+	$flux['data'] += objet_optimiser_liens(['restriction'=>'*'], '*');
 
 	return $flux;
 }
@@ -95,19 +95,22 @@ function locations_objets_restrictions_formulaire_verifier($flux){
 			 'rang_lien ASC');
 
 		// Pour chaque restriction on vérifie si les valeurs des champs à tester contiennent des erreurs.
-		while ($row sql_fetch($sql)) {
+		while ($row=sql_fetch($sql)) {
 			$type_restriction = $row['type_restriction'];
 			$definitions_saisie = $definitions_saisies[$type_restriction];
 			if (isset($definitions_saisie['verifier']) AND isset($definitions_saisie['verifier']['champs'])) {
-				foreach ($definitions_saisie['verifier']['champs'] = $champ) {
+				foreach ($definitions_saisie['verifier']['champs'] AS $champ) {
 					// S'il n'existe pas déjà d'erreur pour le champ en question, on verifie via la vérification correspondante
 					// au type de restriction.
 					if (!isset($flux['data'][$champ]) AND
 						$erreur = $verifier(
 							$champ,
-							$type_restriction,
-							array(
-								'valeurs_restriction'=> json_decode($row['valeurs_restriction'], TRUE)))) {
+							"$type_restriction_$champ",
+							[
+								'valeurs_restriction'=> json_decode($row['valeurs_restriction'], TRUE)
+							],
+							$champ
+							)) {
 						$flux['data'][$champ] = $erreur;
 					}
 				}
