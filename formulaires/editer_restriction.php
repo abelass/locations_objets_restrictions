@@ -94,8 +94,7 @@ function formulaires_editer_restriction_charger_dist($id_restriction = 'new', $r
 	$valeurs['_valeurs_restriction'] = json_decode($valeurs['valeurs_restriction'], TRUE);
 
 	if ($type_restriction) {
-		foreach ($restrictions[$type_restriction]['saisies'] AS $saisie) {
-			$nom = $saisie['options']['nom'];
+		foreach (saisies_lister_par_nom($restrictions[$type_restriction]['saisies']) AS $nom => $saisie) {
 			$valeurs[$nom] = _request($nom) ?
 				_request($nom) :
 				$valeurs['_valeurs_restriction'][$nom];
