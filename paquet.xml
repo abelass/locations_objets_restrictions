@@ -2,7 +2,7 @@
 	prefix="locations_objets_restrictions"
 	categorie="divers"
 	version="1.0.1"
-	etat="dev"
+	etat="test"
 	compatibilite="[3.2.3;3.2.*]"
 	logo="prive/themes/spip/images/locations_objets_restrictions-64.png"
 	documentation="https://github.com/abelass/locations_objets_restrictions"
