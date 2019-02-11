@@ -89,7 +89,10 @@ function locations_objets_restrictions_recuperer_fond($flux){
 	if ($flux['args']['fond'] == 'formulaires/inc-editer_objets_location_dates'){
 
 		if ($flux['args']['contexte']['recharge_ajax']) {
+			include_spip('inc/locations_objets_restrictions');
 			include_spip('public/assembler');
+
+			// On normalise les dates.
 			$verifier = charger_fonction('verifier', 'inc');
 			$erreurs = array();
 			foreach (array('date_debut', 'date_fin') AS $champ) {
@@ -106,11 +109,16 @@ function locations_objets_restrictions_recuperer_fond($flux){
 				}
 			}
 
-			include_spip('inc/locations_objets_restrictions');
+			// On récupère les données du contexte.
 			$contexte = calculer_contexte();
+
+			// On vérifie les erreurs de restrictions.
 			$contexte['erreurs'] = lor_verifier($erreurs);
+
+			// On évite le loop infinie.
 			unset($contexte['recharge_ajax']);
-			spip_log($contexte, 'teste');
+
+			// On ajoute un ajax pour la date_fin et recharge avec les erreurs.
 			$script = recuperer_fond('formulaires/inc-editer_objets_location_dates_script');
 			$flux['data']['texte'] = recuperer_fond(
 				'formulaires/inc-editer_objets_location_dates',
