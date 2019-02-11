@@ -17,7 +17,6 @@ if (!defined("_ECRIRE_INC_VERSION"))
  * @return array Les champs de la restriction.
  */
 function lor_definition_saisies($type_restriction, $valeurs = [], $options = []) {
-
 	$restrictions = chercher_definitions_restrictions($valeurs);
 
 	if (is_array($restrictions)) {
@@ -77,10 +76,10 @@ function chercher_definitions_restrictions($valeurs = []) {
 
 /**
  * Vérifie les trestrictions
- * 
+ *
  * @param array $erreurs
  *   Les erreurs.
- * 
+ *
  * @return array
  *   Les erreurs.
  */
@@ -90,7 +89,7 @@ function lor_verifier($erreurs = []) {
 	$verifier = charger_fonction('verifier', 'inc');
 	$objet = _request('location_objet');
 	$id_objet = _request('id_location_objet');
-	spip_log("objet : $objet, id_ibjet $id_objet", 'teste');
+
 
 	// On détermine les restrictions attachées à l'objet de location.
 	$sql = sql_select(
@@ -101,21 +100,23 @@ function lor_verifier($erreurs = []) {
 		 'rang_lien ASC');
 
 	// Pour chaque restriction on vérifie si les valeurs des champs à tester contiennent des erreurs.
-	while ($row=sql_fetch($sql)) {
+	while ($row = sql_fetch($sql)) {
+
 		$type_restriction = $row['type_restriction'];
 		$definitions_saisie = $definitions_saisies[$type_restriction];
+
+
 		if (isset($definitions_saisie['verifier']) AND isset($definitions_saisie['verifier']['champs'])) {
 			foreach ($definitions_saisie['verifier']['champs'] AS $champ) {
 				// S'il n'existe pas déjà d'erreur pour le champ en question, on verifie via la vérification correspondante
 				// au type de restriction.
-				if (!isset($$erreurs[$champ]) AND
+				if (!isset($erreurs[$champ]) AND
 					$erreur = $verifier(
-						$champ,
+						_request($champ),
 						$type_restriction . '_' . $champ,
 						[
 							'valeurs_restriction'=> json_decode($row['valeurs_restriction'], TRUE)
-						],
-						$champ
+						]
 						)) {
 					$erreurs[$champ] = $erreur;
 				}

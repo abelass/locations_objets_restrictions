@@ -61,7 +61,6 @@ function locations_objets_restrictions_affiche_milieu($flux) {
  *   Données du pipeline
  */
 function locations_objets_restrictions_optimiser_base_disparus($flux) {
-
 	include_spip('action/editer_liens');
 	$flux['data'] += objet_optimiser_liens(['restriction'=>'*'], '*');
 
@@ -90,11 +89,34 @@ function locations_objets_restrictions_recuperer_fond($flux){
 	if ($flux['args']['fond'] == 'formulaires/inc-editer_objets_location_dates'){
 
 		if ($flux['args']['contexte']['recharge_ajax']) {
-			/*include_spip('inc/locations_objets_restrictions');
-			spip_log('recharge', 'teste');
-			//$flux['data']['erreurs'] = lor_verifier();
+			include_spip('public/assembler');
+			$verifier = charger_fonction('verifier', 'inc');
+			$erreurs = array();
+			foreach (array('date_debut', 'date_fin') AS $champ) {
+				$normaliser = null;
+				if ($erreur = $verifier(_request($champ), 'date', array('normaliser'=>'datetime'), $normaliser)) {
+					$erreurs[$champ] = $erreur;
+					// si une valeur de normalisation a ete transmis, la prendre.
+				} elseif (!is_null($normaliser)) {
+					set_request($champ, $normaliser);
+					$$champ = $normaliser;
+					// si pas de normalisation ET pas de date soumise, il ne faut pas tenter d'enregistrer ''
+				} else {
+					set_request($champ, null);
+				}
+			}
 
-			//spip_log(lor_verifier(), 'teste');*/
+			include_spip('inc/locations_objets_restrictions');
+			$contexte = calculer_contexte();
+			$contexte['erreurs'] = lor_verifier($erreurs);
+			unset($contexte['recharge_ajax']);
+			spip_log($contexte, 'teste');
+			$script = recuperer_fond('formulaires/inc-editer_objets_location_dates_script');
+			$flux['data']['texte'] = recuperer_fond(
+				'formulaires/inc-editer_objets_location_dates',
+				$contexte,
+				['ajax' => 'objets_location_dates']) . $script;
+
 		}
 	}
 	return $flux;

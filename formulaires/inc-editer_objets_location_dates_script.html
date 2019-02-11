@@ -1,0 +1,20 @@
+<script type="text/javascript">
+	$(function() {
+
+		$("#champ_date_fin").on('change',function() {
+			var date_fin = $(this).val();
+			var date_debut = $( "input[name='date_debut']" ).attr('value');
+			var location_objet = $( "input[name='location_objet']" ).attr('value');
+			var id_location_objet = $( "input[name='id_location_objet']" ).attr('value');
+			ajaxReload('objets_location_dates', {
+				args : {
+					date_debut : date_debut,
+					date_fin : date_fin,
+					location_objet: location_objet,
+					id_location_objet : id_location_objet,
+					recharge_ajax : true
+				}
+			});
+		});
+	});
+</script>
