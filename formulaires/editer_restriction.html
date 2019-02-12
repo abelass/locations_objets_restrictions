@@ -9,10 +9,10 @@
 		<div class="editer-groupe">
 
 			[(#SAISIE{input, titre, obligatoire=oui,
-				label=<:restriction:champ_titre_label:>})]
+				label=<:ecrire:info_titre:>})]
 
 			[(#SAISIE{textarea, descriptif,
-				label=<:restriction:champ_descriptif_label:>})]
+				label=<:ecrire:info_descriptif:>})]
 			#SET{type_saisie,selection}
 			[(#ENV{_types_restriction}|count|<={1}|oui)
 				#SET{type_saisie,hidden}

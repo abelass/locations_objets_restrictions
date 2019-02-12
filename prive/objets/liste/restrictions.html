@@ -11,8 +11,8 @@
 	<thead>
 		<tr class="first_row">
 			<th class="picto" scope="col"></th>
-			<th class="titre" scope="col">[(#TRI{titre,<:restriction:champ_titre_label:>,ajax})]</th>
-			<th class="date" scope="col">[(#TRI{date,<:date:>,ajax})]</th> 
+			<th class="titre" scope="col">[(#TRI{titre,<:ecrire:info_titre:>,ajax})]</th>
+			<th class="date" scope="col">[(#TRI{date,<:date:>,ajax})]</th>
 			<th class="id" scope="col">[(#TRI{id_restriction,<:info_numero_abbreviation:>,ajax})]</th>
 		</tr>
 	</thead>
@@ -21,7 +21,7 @@
 		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]">
 			<td class="picto">[(#CHEMIN_IMAGE{restriction-16.png}|balise_img)]</td>
 			<td class="titre principale">[(#LOGO_RESTRICTION|image_reduire{20,26})]<a href="[(#ID_RESTRICTION|generer_url_entite{restriction})]" title="<:info_numero_abbreviation|attribut_html:> #ID_RESTRICTION">[(#RANG). ]#TITRE</a></td>
-			<td class="date secondaire">[(#DATE|affdate_jourcourt)]</td> 
+			<td class="date secondaire">[(#DATE|affdate_jourcourt)]</td>
 			<td class="id">[(#AUTORISER{modifier,restriction,#ID_RESTRICTION}|?{
 				<a href="[(#URL_ECRIRE{restriction_edit,id_restriction=#ID_RESTRICTION})]">#ID_RESTRICTION</a>,
 				#ID_RESTRICTION
