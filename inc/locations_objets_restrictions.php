@@ -83,7 +83,7 @@ function chercher_definitions_restrictions($valeurs = []) {
  * @return array
  *   Les erreurs.
  */
-function lor_verifier($erreurs = []) {
+function lor_verifier($erreurs = [], $type) {
 	include_spip('inc/locations_objets_restrictions');
 	$definitions_saisies = chercher_definitions_restrictions();
 	$verifier = charger_fonction('verifier', 'inc');
@@ -104,9 +104,11 @@ function lor_verifier($erreurs = []) {
 
 		$type_restriction = $row['type_restriction'];
 		$definitions_saisie = $definitions_saisies[$type_restriction];
+		$type_verification = $definitions_saisie['verifier']['type'];
 
+spip_log("$type_verification - $type", 'teste');
 
-		if (isset($definitions_saisie['verifier']) AND isset($definitions_saisie['verifier']['champs'])) {
+		if (isset($definitions_saisie['verifier']['champs']) AND $type_verification == $type) {
 			foreach ($definitions_saisie['verifier']['champs'] AS $champ) {
 				// S'il n'existe pas déjà d'erreur pour le champ en question, on verifie via la vérification correspondante
 				// au type de restriction.
