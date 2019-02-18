@@ -77,10 +77,8 @@ function locations_objets_restrictions_optimiser_base_disparus($flux) {
  *   Données du pipeline
  */
 function locations_objets_restrictions_objets_location_verifier_dates($flux){
-	if ($flux['args']['form'] == 'editer_objets_location'){
-		include_spip('inc/locations_objets_restrictions');
-		$flux['data'] = lor_verifier($flux['data']);
-	}
+	include_spip('inc/locations_objets_restrictions');
+	$flux['data'] = lor_verifier($flux['data']);
 
 	return $flux;
 }
