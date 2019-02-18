@@ -67,21 +67,6 @@ function locations_objets_restrictions_optimiser_base_disparus($flux) {
 	return $flux;
 }
 
-/**
- * Compléter le tableau d’erreurs renvoyé par la fonction verifier d'un formulaire CVT.
- *
- * @pipeline objets_location_verifier_dates
- * @param array $flux
- *  Données du pipeline
- * @return array
- *   Données du pipeline
- */
-function locations_objets_restrictions_objets_location_verifier_dates($flux){
-	include_spip('inc/locations_objets_restrictions');
-	$flux['data'] = lor_verifier($flux['data'], 'dates');
-	return $flux;
-}
-
 function locations_objets_restrictions_recuperer_fond($flux){
 	if ($flux['args']['fond'] == 'formulaires/inc-editer_objets_location_dates'){
 

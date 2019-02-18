@@ -106,12 +106,10 @@ function lor_verifier($erreurs = [], $type) {
 		$definitions_saisie = $definitions_saisies[$type_restriction];
 		$type_verification = $definitions_saisie['verifier']['type'];
 
-spip_log("$type_verification - $type", 'teste');
-
 		if (isset($definitions_saisie['verifier']['champs']) AND $type_verification == $type) {
 			foreach ($definitions_saisie['verifier']['champs'] AS $champ) {
-				// S'il n'existe pas déjà d'erreur pour le champ en question, on verifie via la vérification correspondante
-				// au type de restriction.
+				// S'il n'existe pas déjà d'erreur pour le champ en question,
+				// on verifie via la vérification correspondante au type de restriction.
 				if (!isset($erreurs[$champ]) AND
 					$erreur = $verifier(
 						_request($champ),
