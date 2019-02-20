@@ -15,4 +15,3 @@ Le plugin offre une interface pour encoder des restrictions pour les objets déf
 
 ## Extensions
 - [Restrictions par période](https://github.com/abelass/objets_restrictions_periodes)
-us
