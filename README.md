@@ -2,7 +2,7 @@
 Définir des restrictions applicable à un objet louable
 
 ## Dépendances
-- (Location d'objets)[https://github.com/abelass/location_objets]
+- (Location d'objets) [https://github.com/abelass/location_objets]
 - (Saisies)[https://plugins.spip.net/saisies.html]
 - (Vérifier)[https://plugins.spip.net/verifier.html]
 
