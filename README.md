@@ -1,4 +1,4 @@
-# locations_objets_restrictions
+# Locations d&#039;objets - restrictions
 Définir des restrictions applicable à un objet louable
 
 ## Dépendances
